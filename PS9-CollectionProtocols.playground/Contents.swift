@@ -43,11 +43,12 @@ struct LocationTrack {
         // This function is completely broken. It always returns 0. Do the right
         // calculation by uncommenting the next four lines and doint the right summation
         // in the body of the for loop. Then return the result of the summation instead of 0.
-        // var result: CLLocationDistance = 0
-        // let segmentSequence = SegmentSequence(locationTrack: self)
-        // for segment in segmentSequence {
-        // }
-        return 0
+        var result: CLLocationDistance = 0
+        let segmentSequence = SegmentSequence(locationTrack: self)
+        for segment in segmentSequence {
+            result += segment.start.distanceFromLocation(segment.end)
+        }
+        return result
     }
     
     // Just so you have an example to peruse, here is a function that returns an array
@@ -80,7 +81,9 @@ class SegmentGenerator: GeneratorType {
         // The generator is completely broken. It always returns nil. Fix it.
         // Don't change anything else! There are of course plenty of ways to get the
         // right result. The point of this problem set is get the results using generators.
-        return nil
+        index += 1
+        if( index < locationTrack.locations.count) {return (locationTrack.locations[index - 1], locationTrack.locations[index])}
+        else {return nil}
     }
 
 }
